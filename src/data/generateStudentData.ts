@@ -114,8 +114,6 @@ export function generateStudentData(count: number = 200): Student[] {
   return students;
 }
 
-// Export the generated data
+// Export the generated data for sample purposes only
+// The main application now uses CSV upload functionality
 export const studentData = generateStudentData(200);
-
-// Export as JSON for easy import
-export const studentDataJSON = JSON.stringify(studentData, null, 2);
