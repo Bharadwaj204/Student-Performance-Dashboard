@@ -4,14 +4,15 @@ import React, { useState, useEffect, useMemo } from 'react'
 import { Student } from '@/data/generateStudentData'
 import { LinearRegressionModel, StudentClusterer, calculateCorrelation } from '@/lib/mlModels'
 import { formatNumber, getPerformanceLevel, cn } from '@/lib/utils'
-import { BarChart, ScatterChart, RadarChart, TrendingUp, Users, BookOpen, Award, Brain, Clock } from 'lucide-react'
+import { BarChart, ScatterChart, TrendingUp, Users, BookOpen, Award, Brain, Clock } from 'lucide-react'
 import StatsCard from './StatsCard'
 import Charts from './Charts'
 import StudentTable from './StudentTable'
 import InsightsSection from './InsightsSection'
+import FileUpload from './FileUpload'
 
 interface DashboardProps {
-  students: Student[]
+  students?: Student[] // Make students optional
 }
 
 interface DashboardStats {
@@ -33,15 +34,18 @@ interface DashboardStats {
   }
 }
 
-const Dashboard: React.FC<DashboardProps> = ({ students }) => {
+const Dashboard: React.FC<DashboardProps> = ({ students: initialStudents }) => {
   const [activeTab, setActiveTab] = useState('overview')
   const [selectedClass, setSelectedClass] = useState<string>('all')
   const [mlModel] = useState(() => new LinearRegressionModel())
   const [clusterer] = useState(() => new StudentClusterer())
   const [isLoading, setIsLoading] = useState(true)
+  const [students, setStudents] = useState<Student[]>(initialStudents || [])
+  const [uploadError, setUploadError] = useState<string>('')
 
   // Filter students by selected class
   const filteredStudents = useMemo(() => {
+    if (!students || students.length === 0) return []
     if (selectedClass === 'all') return students
     return students.filter(student => student.class === selectedClass)
   }, [students, selectedClass])
@@ -111,13 +115,30 @@ const Dashboard: React.FC<DashboardProps> = ({ students }) => {
 
   // Get unique classes for filter
   const classes = useMemo(() => {
+    if (!students || students.length === 0) return ['all']
     const uniqueClasses = [...new Set(students.map(s => s.class))]
     return ['all', ...uniqueClasses.sort()]
   }, [students])
 
+  // Handle file upload
+  const handleDataLoad = (uploadedStudents: Student[]) => {
+    setStudents(uploadedStudents)
+    setUploadError('')
+    setActiveTab('overview')
+  }
+
+  const handleUploadError = (error: string) => {
+    setUploadError(error)
+  }
+
   // Initialize ML models
   useEffect(() => {
     const initializeModels = async () => {
+      if (!students || students.length === 0) {
+        setIsLoading(false)
+        return
+      }
+      
       try {
         setIsLoading(true)
         
@@ -129,7 +150,7 @@ const Dashboard: React.FC<DashboardProps> = ({ students }) => {
         
         setIsLoading(false)
       } catch (error) {
-        console.error('Error initializing models:', error)
+        // console.error('Error initializing models:', error)
         setIsLoading(false)
       }
     }
@@ -138,6 +159,33 @@ const Dashboard: React.FC<DashboardProps> = ({ students }) => {
   }, [students, mlModel, clusterer])
 
   const performanceLevel = getPerformanceLevel(stats.averageScore)
+
+  // Show file upload if no data is loaded
+  if (!students || students.length === 0) {
+    return (
+      <div className="min-h-screen bg-background">
+        {/* Header */}
+        <header className="border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+          <div className="container mx-auto px-4 py-6">
+            <div className="text-center">
+              <h1 className="text-3xl font-bold text-foreground">Student Performance Dashboard</h1>
+              <p className="text-muted-foreground mt-1">Cognitive Skills & Academic Performance Analysis</p>
+            </div>
+          </div>
+        </header>
+
+        {/* File Upload Section */}
+        <main className="container mx-auto px-4 py-8">
+          {uploadError && (
+            <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+              <p className="text-red-700 text-sm">{uploadError}</p>
+            </div>
+          )}
+          <FileUpload onDataLoad={handleDataLoad} onError={handleUploadError} />
+        </main>
+      </div>
+    )
+  }
 
   if (isLoading) {
     return (

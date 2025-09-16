@@ -1,0 +1,11 @@
+student_id,name,class,comprehension,attention,focus,retention,assessment_score,engagement_time
+STU0001,Emma Johnson,Mathematics A,85.5,82.1,79.3,88.2,84.7,120
+STU0002,Liam Chen,Computer Science B,78.2,85.6,88.1,82.3,83.9,135
+STU0003,Olivia Rodriguez,Physics A,92.1,89.4,91.7,95.8,92.2,165
+STU0004,Noah Williams,Chemistry B,65.3,68.7,71.2,69.9,68.8,95
+STU0005,Ava Brown,Biology A,76.8,73.4,75.7,78.1,75.2,113
+STU0006,Oliver Davis,English Literature A,89.2,85.6,88.1,91.3,87.9,142
+STU0007,Isabella Wilson,History B,72.4,69.8,71.5,70.1,72.3,105
+STU0008,Elijah Garcia,Economics A,56.7,52.3,54.8,59.2,55.9,78
+STU0009,Sophia Martinez,Psychology B,83.1,79.4,81.7,85.6,82.5,118
+STU0010,William Anderson,Computer Science A,91.5,88.2,90.3,93.1,89.7,156
