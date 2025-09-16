@@ -9,7 +9,7 @@
 
 ## 🌟 Live Demo
 
-**🚀 [View Live Application](https://student-performance-dashboard-coral.vercel.app)** *(Deploy Soon)*
+**🚀 [View Live Application](https://student-performance-dashboard-iota.vercel.app/)** *(Deploy Soon)*
 
 ## ✨ Key Features
 
@@ -145,17 +145,6 @@ student-dashboard/
 2. **⚖️ Balanced Learners**: Good overall performance with consistent skills
 3. **📚 Developing Students**: Average performance with growth potential
 4. **🆘 Struggling Learners**: Require targeted support and intervention
-
-## 🎨 Screenshots
-
-### Dashboard Overview
-![Dashboard](https://via.placeholder.com/800x400/4F46E5/FFFFFF?text=Dashboard+Overview)
-
-### Data Visualizations
-![Charts](https://via.placeholder.com/800x400/059669/FFFFFF?text=Interactive+Charts)
-
-### Student Analytics
-![Analytics](https://via.placeholder.com/800x400/DC2626/FFFFFF?text=Student+Analytics)
 
 ## 🤝 Contributing
 
